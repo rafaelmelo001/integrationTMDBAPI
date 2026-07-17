@@ -1,0 +1,25 @@
+# Build
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# Docker
+docker-compose.override.yml
+
+# Environment files
+.env
+.env.*
+
+# Sistema Operacional
+Thumbs.db
+.DS_Store
