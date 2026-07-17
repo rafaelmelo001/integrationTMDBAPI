@@ -1,9 +1,26 @@
+using Microsoft.Extensions.Options;
+using TMDBAPI.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<MovieService>();
+
+builder.Services.AddCors(options =>
+{
+   options.AddPolicy("frontend", policy =>
+   {
+       policy.WithOrigins("http://localhost:5500",
+                          "http://127.0.0.1:5500")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+   });
+});
+
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
@@ -13,6 +30,7 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+app.UseCors("frontend");
 
 app.UseHttpsRedirection();
 
