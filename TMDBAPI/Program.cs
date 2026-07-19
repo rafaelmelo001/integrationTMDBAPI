@@ -1,5 +1,10 @@
 using Microsoft.Extensions.Options;
 using TMDBAPI.Services;
+using DotNetEnv;
+if (File.Exists(".env"))//se existir o .env carrega.
+{
+    Env.Load();
+}
 
 var builder = WebApplication.CreateBuilder(args);
 
