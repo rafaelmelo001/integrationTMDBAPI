@@ -5,7 +5,7 @@ O Integration API OMDb foi desenvolvido com o objetivo de praticar conceitos de 
 
 A aplicação é composta por:
 
-🖥️ Frontend desenvolvido com HTML, CSS e JavaScript puro.
+🖥️ Frontend desenvolvido com HTML, CSS e JavaScript.
 ⚙️ Backend em ASP.NET Core responsável por consumir a API da OMDb.
 🐳 Containerização utilizando Docker.
 ☁️ Deploy do Backend no Render.
@@ -31,3 +31,4 @@ DevOps
 ▲ Vercel
 Git
 GitHub
+![alt text](image.png)
