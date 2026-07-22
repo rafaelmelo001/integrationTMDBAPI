@@ -18,7 +18,8 @@ builder.Services.AddCors(options =>
    options.AddPolicy("frontend", policy =>
    {
        policy.WithOrigins("http://localhost:5500",
-                          "http://127.0.0.1:5500")
+                          "http://127.0.0.1:5500",
+                          "https://integration-tmdbapi.vercel.app")
                                 .AllowAnyHeader()
                                 .AllowAnyMethod();
    });
