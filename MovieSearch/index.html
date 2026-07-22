@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Movie Search</title>
+
+        <link rel="stylesheet" href="./CSS/styleFilms.css">
+
+        <script 
+            type="module" 
+            src="./JS/controller/filmController.js" 
+            defer>
+        </script>
+
+    </head>
+
+    <body>
+
+        <main class="container">
+
+            <h1>🎬 Search Movie</h1>
+
+            <div class="search-box">
+
+                <input 
+                    type="text"
+                    id="filme"
+                    placeholder="Digite o nome do filme"
+                >
+
+                <button id="getFilm">
+                    Buscar
+                </button>
+
+            </div>
+
+            <p id="message" class="message"></p>
+
+            <div id="loading" class="loading">
+
+                <svg viewBox="25 25 50 50">
+                    <circle r="20" cy="50" cx="50"></circle>
+                </svg>
+        
+            </div>
+
+            <section id="showContent" class="movie-card">
+
+            </section>
+
+        </main>
+        <footer class="footer">
+            <div class="footer-content">
+
+                <h3>🎬 Movie Search</h3>
+
+                <p>Projeto desenvolvido com ASP.NET Core Web API, JavaScript e TMDB API.</p>
+
+                <div class="footer-links">
+                    <a href="https://github.com/rafaelmelo001" target="_blank">
+                        GitHub
+                    </a>
+
+                    <!-- <a href="https://www.linkedin.com/in/SEU_LINKEDIN" target="_blank">
+                        LinkedIn
+                    </a> -->
+                </div>
+
+                <small>
+                    © 2026 Rafael Melo • Dados fornecidos pela TMDB
+                </small>
+
+            </div>
+        </footer>
+    </body>
+</html>
