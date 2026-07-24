@@ -1,27 +1,37 @@
 using System.Net.Http.Headers;
 using TMDBAPI.Models;
 using TMDBAPI.DTOs;
-using System.Text.Json;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Mvc.Filters;
+using TMDBAPI.Configurations;
+using Microsoft.Extensions.Options;
+
 
 namespace TMDBAPI.Services
 {
     public class MovieService
     {
         private readonly HttpClient _httpClient;
-
         private readonly string _token;
-        public MovieService(HttpClient httpClient)
+        private readonly MovieFilterOptions _filterOptions;
+        private bool IsBlackListed(MovieModel movie)
+        {
+            var text = $"{movie.title} {movie.overview}";
+
+            return _filterOptions.BlackList.Any(word =>
+                text.Contains(word, StringComparison.OrdinalIgnoreCase));
+        }
+        public MovieService(HttpClient httpClient,IOptions<MovieFilterOptions> filterOptions)
         {
             _httpClient = httpClient;
             _token = Environment.GetEnvironmentVariable("TMDBAPI")
                 ?? throw new Exception("TMDBKEY não configurada");
+            
+            _filterOptions = filterOptions.Value;
+            
         }
 
         public async Task<MovieResponseDTO> GetFilmAsync(string moviename)
         {
-            var urlMovie = $"https://api.themoviedb.org/3/search/movie?query={moviename}";
+            var urlMovie = $"https://api.themoviedb.org/3/search/movie?query={moviename}&include_adult=false";
 
             _httpClient.DefaultRequestHeaders.Authorization = 
             new AuthenticationHeaderValue("Bearer", _token);
@@ -37,7 +47,7 @@ namespace TMDBAPI.Services
 
             //Filter
             movieResponseModel.results = movieResponseModel.results
-            .Where(movie => !movie.adult)
+            .Where(movie => !movie.adult && !IsBlackListed(movie))
             .ToList();
             //Filter
             //Mapeamento

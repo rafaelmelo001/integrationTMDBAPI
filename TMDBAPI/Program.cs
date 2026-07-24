@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Options;
 using TMDBAPI.Services;
 using DotNetEnv;
+using TMDBAPI.Configurations;
 if (File.Exists(".env"))//se existir o .env carrega.
 {
     Env.Load();
@@ -29,6 +30,9 @@ builder.Services.AddControllers();
 
 builder.Services.AddOpenApi();
 
+builder.Services.Configure<MovieFilterOptions>(
+    builder.Configuration.GetSection("MovieFilter"));
+    
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
