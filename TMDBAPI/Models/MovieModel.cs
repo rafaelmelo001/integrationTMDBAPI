@@ -8,6 +8,7 @@ namespace TMDBAPI.Models
         public string poster_path { get; set; } = "";
         public string release_date { get; set; } = "";
         public double vote_average { get; set; }
+        public bool adult {get; set;}
         
     }
 }

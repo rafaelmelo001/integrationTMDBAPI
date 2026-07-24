@@ -3,6 +3,7 @@ using TMDBAPI.Models;
 using TMDBAPI.DTOs;
 using System.Text.Json;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace TMDBAPI.Services
 {
@@ -32,9 +33,15 @@ namespace TMDBAPI.Services
             ///desserialização
             var movieResponseModel = await response.Content.ReadFromJsonAsync<MovieResponseModel>()///desserialização
                 ?? throw new InvalidOperationException("Não foi possível desserializar a resposta da TMDB");
-            //coverter list<movieModel> para list<MovieDTO>
+            
+
+            //Filter
+            movieResponseModel.results = movieResponseModel.results
+            .Where(movie => !movie.adult)
+            .ToList();
+            //Filter
             //Mapeamento
-            List<MovieDTO> movieDtos = [];//neste momento movieDTOs é uma lista vazia
+            List<MovieDTO> movieDtos = [];
             foreach(var movie in movieResponseModel.results)//percorrendo a propriedade "results" que é uma lista<MovieMOdel>
             {                                      //a cada volta a variavel movie recebe um único objeto MovieModel.
                 MovieDTO dto = new MovieDTO();//a cada iteração, cada filme ganha seu proprio objeto MovieDTO, cada um com sua informação.
