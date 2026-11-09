@@ -55,6 +55,7 @@ namespace TMDBAPI.Services
             foreach(var movie in movieResponseModel.results)//percorrendo a propriedade "results" que é uma lista<MovieMOdel>
             {                                      //a cada volta a variavel movie recebe um único objeto MovieModel.
                 MovieDTO dto = new MovieDTO();//a cada iteração, cada filme ganha seu proprio objeto MovieDTO, cada um com sua informação.
+                dto.Id = movie.id;
                 dto.Title = movie.title;//lado esq DTO e dir MODEL, preenchendo a priopriedade Title do DTO. Copia o valor da Model para o DTO.
                 dto.Overview = movie.overview;
                 dto.PosterPath = movie.poster_path;
