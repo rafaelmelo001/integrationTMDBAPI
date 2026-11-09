@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using TMDBAPI.Data;
 using Microsoft.Extensions.Options;
 using TMDBAPI.Services;
 using DotNetEnv;
@@ -31,7 +33,13 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 builder.Services.Configure<MovieFilterOptions>(
-    builder.Configuration.GetSection("MovieFilter"));
+builder.Configuration.GetSection("MovieFilter"));
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>         //AddDbContext: registra nosso contexto na Injeção de Dependência.
+    options.UseNpgsql(                                                 //ApplicationDbContext: informa qual contexto será disponibilizado.
+        Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection") //UseNpgsql: configura o provedor PostgreSQL.
+    )                                                                  
+);
     
 var app = builder.Build();
 

@@ -1,4 +1,4 @@
-import {getFilm} from "../service/movieApiService.js"
+import {getFilm, addFavorite} from "../service/movieApiService.js"
 
 
 const display = document.getElementById("showContent");
@@ -39,7 +39,7 @@ document.getElementById("getFilm").addEventListener("click", async function (){
         
         display.innerHTML = "";
         dados.results.forEach(filme => {
-            console.log(filme)
+        
             display.innerHTML += `
             
             <div class="movie-card">
@@ -52,6 +52,13 @@ document.getElementById("getFilm").addEventListener("click", async function (){
                 <p><strong>Lançamento:</strong> ${filme.releaseDate}</p>
                 <p><strong>Nota:</strong> ${filme.voteAverage}</p>
             </div>
+            <button
+                class="favorite-button"
+                data-movie-id="${filme.id}"
+                data-title="${filme.title}"
+                data-poster="${filme.posterPath}">
+                Adicionar aos favoritos
+            </button>
         </div>
         `; 
         });
@@ -73,4 +80,30 @@ document.getElementById("getFilm").addEventListener("click", async function (){
         hideLoading();
 
     }
+});
+
+display.addEventListener("click", async function (event) {
+
+    if (event.target.classList.contains("favorite-button")) {
+
+        const movieId = Number(event.target.dataset.movieId);
+
+        const filme = {
+        id: Number(event.target.dataset.movieId),
+        title: event.target.dataset.title,
+        posterPath: event.target.dataset.poster
+    };
+
+    try {
+        
+        await addFavorite(filme);
+
+        alert("Filme adicionado aos favoritos!");
+    }
+    catch (error) {
+        console.error(error);
+        alert("Erro ao adicionar favorito.");
+    }
+    }
+
 });

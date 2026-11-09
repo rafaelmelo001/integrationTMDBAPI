@@ -250,6 +250,32 @@ h1 {
     gap: 20px;
 }
 
+/*Favorite-Button*/
+.favorite-button {
+    align-self: center;
+    flex-shrink: 0;
+
+    padding: 12px 20px;
+
+    background: #2563eb;
+    color: white;
+
+    border: none;
+    border-radius: 10px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.favorite-button:hover {
+    background: #1d4ed8;
+}
+
+/*Favorite-Button*/
+
 /*footer*/
 .footer {
     margin-top: 60px;
