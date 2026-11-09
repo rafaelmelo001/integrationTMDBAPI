@@ -1,4 +1,6 @@
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.EntityFrameworkCore;
+using TMDBAPI.Models;
 
 namespace TMDBAPI.Data
 {
@@ -8,5 +10,6 @@ namespace TMDBAPI.Data
         {
             
         }
+        public DbSet<FavoriteMovie> FavoriteMovies {get;set;}
     }
 }
