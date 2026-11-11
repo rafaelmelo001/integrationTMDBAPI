@@ -34,3 +34,30 @@ export async function addFavorite(filme) {
 
     return await response.json();
 }
+
+export async function getFavorites() {
+
+    const response = await fetch(
+        "https://integrationtmdbapi.onrender.com/api/Favorites"
+    );
+
+    if (!response.ok) {
+        throw new Error("Erro ao buscar favoritos");
+    }
+
+    return await response.json();
+}
+
+export async function deleteFavorite(id) {
+
+    const response = await fetch(
+        `https://integrationtmdbapi.onrender.com/api/Favorites/${id}`,
+        {
+            method: "DELETE"
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Erro ao excluir favorito");
+    }
+}

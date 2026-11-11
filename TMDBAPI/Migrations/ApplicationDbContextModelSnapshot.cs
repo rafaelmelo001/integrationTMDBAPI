@@ -40,7 +40,8 @@ namespace TMDBAPI.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
+                    b.HasIndex("MovieId")
+                        .IsUnique();
                     b.ToTable("FavoriteMovies");
                 });
 #pragma warning restore 612, 618

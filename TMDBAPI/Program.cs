@@ -6,7 +6,7 @@ using DotNetEnv;
 using TMDBAPI.Configurations;
 if (File.Exists(".env"))//se existir o .env carrega.
 {
-    Env.Load();
+    Env.NoClobber().Load();
 }
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,7 +42,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>         //AddDbCo
 );
     
 var app = builder.Build();
+await using (var scope = app.Services.CreateAsyncScope())
+{
+    var dbContext = scope.ServiceProvider
+        .GetRequiredService<ApplicationDbContext>();
 
+    await dbContext.Database.MigrateAsync();
+}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

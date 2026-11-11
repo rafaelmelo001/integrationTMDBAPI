@@ -275,7 +275,48 @@ h1 {
 }
 
 /*Favorite-Button*/
+/* Navegação */
+.navigation {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 35px;
+}
 
+.nav-button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 50px;
+
+    background: white;
+    color: #2563eb;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: .3s;
+}
+
+.nav-button:hover {
+    background: #2563eb;
+    color: white;
+}
+
+/* Área de favoritos */
+.favorites-content {
+    display: none;
+}
+
+.favorites-content.show {
+    display: block;
+}
+
+.favorites-content h2 {
+    color: #2563eb;
+    text-align: center;
+    margin-bottom: 30px;
+}
+/*Favorite-Button*/
 /*footer*/
 .footer {
     margin-top: 60px;
@@ -322,3 +363,7 @@ h1 {
     color: #dbeafe;
 }
 /*footer*/
+
+.hidden {
+    display: none !important;
+}

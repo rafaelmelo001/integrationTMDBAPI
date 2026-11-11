@@ -6,6 +6,12 @@ namespace TMDBAPI.Data
 {
     public class ApplicationDbContext : DbContext
     {
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<FavoriteMovie>()
+                .HasIndex(f => f.MovieId)
+                .IsUnique();
+        }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext>options) : base(options)
         {
             

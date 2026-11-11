@@ -1,10 +1,20 @@
-import {getFilm, addFavorite} from "../service/movieApiService.js"
+import {getFilm, addFavorite, getFavorites, deleteFavorite} from "../service/movieApiService.js"
 
 
 const display = document.getElementById("showContent");
 const message = document.getElementById("message");
 const loading = document.getElementById("loading");
 const button = document.getElementById("getFilm");
+/*Favorite-Button*/
+const favoritesTab = document.getElementById("favoritesTab");
+const favoritesContent = document.getElementById("favoritesContent");
+const searchBox = document.querySelector(".search-box");
+const favoritesList = document.getElementById("favoritesList");
+/*Favorite-Button*/
+
+
+
+
 
 function showLoading() {
     loading.classList.add("show");
@@ -106,4 +116,112 @@ display.addEventListener("click", async function (event) {
     }
     }
 
+});
+
+favoritesTab.addEventListener("click", async function () {
+
+    const showingFavorites = favoritesContent.classList.contains("show");
+
+    if (showingFavorites) {
+
+        favoritesContent.classList.remove("show");
+        searchBox.classList.remove("hidden");
+
+        favoritesTab.innerText = "Meus favoritos";
+
+    } else {
+
+        favoritesContent.classList.add("show");
+        searchBox.classList.add("hidden");
+        display.classList.remove("show");
+
+        favoritesTab.innerText = "Voltar à pesquisa";
+
+        try {
+
+            const favoritos = await getFavorites();
+
+            favoritesList.innerHTML = "";
+
+            favoritos.forEach(filme => {
+
+                favoritesList.innerHTML += `
+                    <div class="movie-card">
+
+                        <img 
+                            src="https://image.tmdb.org/t/p/w500${filme.posterPath}"
+                            alt="${filme.title}"
+                        >
+                        
+                        <div class="movie-info">
+                            <h2>${filme.title}</h2>
+
+                            <button 
+                                class="delete-favorite"
+                                data-id="${filme.id}">
+                                Excluir dos favoritos
+                            </button>
+                        </div>
+
+                    </div>
+                `;
+
+            });
+
+        } catch (error) {
+
+            console.error(error);
+            favoritesList.innerHTML = "<p>Erro ao carregar favoritos.</p>";
+
+        }
+    }
+
+});
+
+favoritesList.addEventListener("click", async function (event) {
+
+    if (event.target.classList.contains("delete-favorite")) {
+
+        const id = Number(event.target.dataset.id);
+
+        try {
+
+            await deleteFavorite(id);
+
+            alert("Filme removido dos favoritos!");
+
+            // Atualiza a lista após a exclusão
+            const favoritos = await getFavorites();
+
+            favoritesList.innerHTML = "";
+
+            favoritos.forEach(filme => {
+
+                favoritesList.innerHTML += `
+                    <div class="movie-card">
+                        <img 
+                            src="https://image.tmdb.org/t/p/w500${filme.posterPath}"
+                            alt="${filme.title}"
+                        >
+
+                        <div class="movie-info">
+                            <h2>${filme.title}</h2>
+
+                            <button 
+                                class="delete-favorite"
+                                data-id="${filme.id}">
+                                Excluir dos favoritos
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+        } catch (error) {
+
+            console.error(error);
+            alert("Erro ao excluir favorito.");
+
+        }
+    }
 });

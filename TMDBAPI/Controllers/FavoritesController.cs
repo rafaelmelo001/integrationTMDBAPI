@@ -21,6 +21,14 @@ namespace TMDBAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddFavorite(FavoriteMovie favorite)
         {
+           var alreadyExist = await _context.FavoriteMovies
+           .AnyAsync(f => f.MovieId == favorite.MovieId);
+
+           if(alreadyExist)
+            {
+                return Conflict("Filme ja existe nos favoritos");
+            }
+
             _context.FavoriteMovies.Add(favorite);
 
             await _context.SaveChangesAsync();
